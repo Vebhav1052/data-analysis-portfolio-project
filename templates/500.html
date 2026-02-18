@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Error 500 - Server Error{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5 bg-light d-flex align-items-center" style="min-height: 60vh;">
+    <div class="container text-center">
+        <div class="mb-4">
+            <h1 class="display-1 text-danger fw-bold">500</h1>
+            <h2 class="mb-3">Server Error</h2>
+            <p class="lead text-muted mb-4">
+                Something went wrong on our end. Please try again later.
+            </p>
+        </div>
+
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-6">
+                <a href="/" class="btn btn-primary btn-lg me-2">
+                    <i class="fas fa-home"></i> Go Home
+                </a>
+                <a href="javascript:location.reload()" class="btn btn-outline-primary btn-lg">
+                    <i class="fas fa-redo"></i> Retry
+                </a>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card bg-light">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0">Troubleshooting Steps</h5>
+                    </div>
+                    <div class="card-body text-start">
+                        <ol>
+                            <li>Refresh the page (F5 or Ctrl+R)</li>
+                            <li>Check that Flask app is running
+                                <br><small class="text-muted">Terminal should show "Running on http://..."</small>
+                            </li>
+                            <li>Verify OnlineRetail.csv is in data/ folder</li>
+                            <li>Check Python packages are installed
+                                <br><code class="small">pip install -r requirements.txt</code>
+                            </li>
+                            <li>Restart Flask app
+                                <br><code class="small">python app.py</code>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

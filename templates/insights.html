@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+
+{% block title %}Business Insights - Data Analysis Project{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5 bg-light">
+    <div class="container">
+        <h1 class="mb-4"><i class="fas fa-lightbulb"></i> Business Insights & Recommendations</h1>
+
+        <div class="row">
+            <div class="col-12">
+                <p class="lead mb-4">
+                    Five major findings from the analysis with quantified business impact and actionable recommendations.
+                </p>
+            </div>
+        </div>
+
+        <!-- Load insights via API -->
+        <div id="insights-container"></div>
+
+        <!-- Financial Impact Section -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0"><i class="fas fa-coins"></i> Financial Impact Summary</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h6 class="text-muted">Base Annual Revenue</h6>
+                                <h2 class="text-primary">£1.2M</h2>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="text-muted">Projected Growth</h6>
+                                <h2 class="text-success">12-15%</h2>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="text-muted">Additional Revenue (Year 1)</h6>
+                                <h2 class="text-info">£150K</h2>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="text-muted">Sustained Annual Benefit</h6>
+                                <h2 class="text-warning">£250K+</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <h3 class="mb-3">Implementation Roadmap</h3>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card border-left border-success">
+                    <div class="card-header bg-light">
+                        <h6 class="mb-0"><i class="fas fa-rocket"></i> Q1: Quick Wins (0-3 months)</h6>
+                    </div>
+                    <div class="card-body small">
+                        <ul class="mb-0">
+                            <li>SKU Rationalization: Discontinue bottom 20% products</li>
+                            <li>VIP Loyalty Program: For top 100 customers</li>
+                            <li>Impact: +2-3% revenue</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card border-left border-info">
+                    <div class="card-header bg-light">
+                        <h6 class="mb-0"><i class="fas fa-chart-line"></i> Q1-Q2: Programs (3-6 months)</h6>
+                    </div>
+                    <div class="card-body small">
+                        <ul class="mb-0">
+                            <li>Full Loyalty Rewards Rollout: All customer base</li>
+                            <li>Email Retention Campaigns: Personalized outreach</li>
+                            <li>Impact: +5-7% revenue</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card border-left border-warning">
+                    <div class="card-header bg-light">
+                        <h6 class="mb-0"><i class="fas fa-globe"></i> Q2-Q4: Expansion (6-12 months)</h6>
+                    </div>
+                    <div class="card-body small">
+                        <ul class="mb-0">
+                            <li>EU Market Localization: Product/payment methods</li>
+                            <li>Regional Distribution: Germany + Benelux expansion</li>
+                            <li>Impact: +5-8% revenue</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card border-left border-secondary">
+                    <div class="card-header bg-light">
+                        <h6 class="mb-0"><i class="fas fa-sync"></i> Ongoing: Continuous Improvement</h6>
+                    </div>
+                    <div class="card-body small">
+                        <ul class="mb-0">
+                            <li>Seasonal Inventory Planning: Quarterly adjustments</li>
+                            <li>Customer Cohort Analysis: Monthly monitoring</li>
+                            <li>Impact: Operational efficiency + retention</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    // Load insights from API
+    $.ajax({
+        url: '/api/insights-data',
+        type: 'GET',
+        success: function(data) {
+            displayInsights(data.insights);
+        },
+        error: function() {
+            $('#insights-container').html('<div class="alert alert-danger">Failed to load insights</div>');
+        }
+    });
+});
+
+function displayInsights(insights) {
+    let html = '';
+    insights.forEach(function(insight, index) {
+        let priorityClass = insight.priority === 'HIGH' ? 'bg-danger' : 'bg-warning';
+        let priorityText = insight.priority === 'HIGH' ? 'text-white' : '';
+        
+        html += `
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h5 class="mb-0">${insight.title}</h5>
+                                </div>
+                                <div class="col-auto">
+                                    <span class="badge ${priorityClass} ${priorityText}">${insight.priority}</span>
+                                    <span class="badge bg-secondary">${insight.timeline}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <h6 class="text-muted">Finding</h6>
+                                    <p>${insight.finding}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="text-muted">Business Impact</h6>
+                                    <p>${insight.impact}</p>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <h6 class="text-muted">Recommendation</h6>
+                                    <p>${insight.recommendation}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="text-muted">Expected Benefit</h6>
+                                    <p class="text-success"><strong>${insight.expected_benefit}</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    $('#insights-container').html(html);
+}
+</script>
+{% endblock %}

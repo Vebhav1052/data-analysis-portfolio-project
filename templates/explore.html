@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+
+{% block title %}Explore Data - Data Analysis Project{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5 bg-light">
+    <div class="container">
+        <h1 class="mb-4"><i class="fas fa-database"></i> Data Exploration</h1>
+
+        <!-- Tabs -->
+        <ul class="nav nav-tabs mb-4" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="raw-tab" data-bs-toggle="tab" data-bs-target="#raw" type="button" role="tab">
+                    <i class="fas fa-file-csv"></i> Raw Data
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="cleaned-tab" data-bs-toggle="tab" data-bs-target="#cleaned" type="button" role="tab">
+                    <i class="fas fa-broom"></i> Cleaned Data
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="report-tab" data-bs-toggle="tab" data-bs-target="#report" type="button" role="tab">
+                    <i class="fas fa-file-alt"></i> Cleaning Report
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content">
+            <!-- Raw Data Tab -->
+            <div class="tab-pane fade show active" id="raw" role="tabpanel">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Raw Dataset Preview</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="raw-data-loading" class="text-center p-4">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2">Loading data...</p>
+                        </div>
+                        <div id="raw-data-content" style="display: none;">
+                            <div id="raw-stats" class="mb-3">
+                                <p><strong>Shape:</strong> <span id="raw-shape"></span></p>
+                                <p><strong>Columns:</strong> <span id="raw-columns"></span></p>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover" id="raw-data-table">
+                                    <thead></thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cleaned Data Tab -->
+            <div class="tab-pane fade" id="cleaned" role="tabpanel">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Cleaned Dataset Preview</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="cleaned-data-loading" class="text-center p-4">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2">Loading cleaned data...</p>
+                        </div>
+                        <div id="cleaned-data-content" style="display: none;">
+                            <div id="cleaned-stats" class="mb-3">
+                                <p><strong>Shape:</strong> <span id="cleaned-shape"></span></p>
+                                <p><strong>Columns:</strong> <span id="cleaned-columns"></span></p>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover" id="cleaned-data-table">
+                                    <thead></thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <a href="/download/cleaned_data" class="btn btn-primary mt-3">
+                                <i class="fas fa-download"></i> Download Cleaned Data
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Report Tab -->
+            <div class="tab-pane fade" id="report" role="tabpanel">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Data Cleaning Report</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="report-loading" class="text-center p-4">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2">Loading report...</p>
+                        </div>
+                        <div id="report-content" style="display: none;">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover" id="report-table">
+                                    <thead></thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <a href="/download/cleaning_report" class="btn btn-primary mt-3">
+                                <i class="fas fa-download"></i> Download Report
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    // Load raw data when page loads
+    loadRawData();
+    
+    // Load cleaned data when tab is clicked
+    $('#cleaned-tab').on('click', function() {
+        loadCleanedData();
+    });
+    
+    // Load report when tab is clicked
+    $('#report-tab').on('click', function() {
+        loadReport();
+    });
+});
+
+function loadRawData() {
+    $.ajax({
+        url: '/api/data-preview',
+        type: 'GET',
+        success: function(data) {
+            if (data.error) {
+                $('#raw-data-loading').html('<div class="alert alert-warning">Error: ' + data.error + '</div>');
+            } else {
+                displayData(data, 'raw');
+            }
+        },
+        error: function() {
+            $('#raw-data-loading').html('<div class="alert alert-danger">Failed to load data</div>');
+        }
+    });
+}
+
+function loadCleanedData() {
+    if ($('#cleaned-data-content').html().trim() === '') {
+        $.ajax({
+            url: '/api/cleaned-data-preview',
+            type: 'GET',
+            success: function(data) {
+                if (data.error) {
+                    $('#cleaned-data-loading').html('<div class="alert alert-warning">Error: ' + data.error + '</div>');
+                } else {
+                    displayData(data, 'cleaned');
+                }
+            },
+            error: function() {
+                $('#cleaned-data-loading').html('<div class="alert alert-danger">Failed to load data</div>');
+            }
+        });
+    }
+}
+
+function loadReport() {
+    if ($('#report-content').html().trim() === '') {
+        $.ajax({
+            url: '/api/cleaning-report',
+            type: 'GET',
+            success: function(data) {
+                if (data.error) {
+                    $('#report-loading').html('<div class="alert alert-warning">Error: ' + data.error + '</div>');
+                } else {
+                    displayReport(data);
+                }
+            },
+            error: function() {
+                $('#report-loading').html('<div class="alert alert-danger">Failed to load report</div>');
+            }
+        });
+    }
+}
+
+function displayData(data, type) {
+    let prefix = type === 'raw' ? 'raw' : 'cleaned';
+    
+    // Display shape and columns
+    $('#' + prefix + '-shape').text(data.shape[0].toLocaleString() + ' rows × ' + data.shape[1] + ' columns');
+    $('#' + prefix + '-columns').text(data.columns.join(', '));
+    
+    // Create table
+    let tableHead = '<tr>';
+    data.columns.forEach(col => {
+        tableHead += '<th>' + col + '</th>';
+    });
+    tableHead += '</tr>';
+    
+    $('#' + prefix + '-data-table thead').html(tableHead);
+    
+    let tableBody = '';
+    data.data.forEach(row => {
+        tableBody += '<tr>';
+        row.forEach(cell => {
+            tableBody += '<td>' + (cell === null ? 'NULL' : cell) + '</td>';
+        });
+        tableBody += '</tr>';
+    });
+    
+    $('#' + prefix + '-data-table tbody').html(tableBody);
+    
+    // Hide loading, show content
+    $('#' + prefix + '-data-loading').hide();
+    $('#' + prefix + '-data-content').show();
+}
+
+function displayReport(data) {
+    // Create table header
+    let tableHead = '<tr>';
+    data.columns.forEach(col => {
+        tableHead += '<th>' + col + '</th>';
+    });
+    tableHead += '</tr>';
+    
+    $('#report-table thead').html(tableHead);
+    
+    // Create table body
+    let tableBody = '';
+    data.data.forEach(row => {
+        tableBody += '<tr>';
+        row.forEach(cell => {
+            tableBody += '<td>' + (cell === null ? 'NULL' : cell) + '</td>';
+        });
+        tableBody += '</tr>';
+    });
+    
+    $('#report-table tbody').html(tableBody);
+    
+    // Hide loading, show content
+    $('#report-loading').hide();
+    $('#report-content').show();
+}
+</script>
+{% endblock %}

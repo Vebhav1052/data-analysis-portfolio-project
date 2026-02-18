@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Data Analysis Project{% endblock %}
+
+{% block content %}
+<div class="container-fluid bg-light py-5">
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="row align-items-center mb-5">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-3">
+                    <span class="text-primary">Data Analysis</span> Portfolio Project
+                </h1>
+                <p class="lead mb-4">
+                    Complete end-to-end analysis of e-commerce sales data with Python, SQL, and statistics.
+                    Discover actionable business insights from 500K+ transactions.
+                </p>
+                <div class="btn-group mb-4">
+                    <a href="/dashboard" class="btn btn-primary btn-lg">
+                        <i class="fas fa-chart-pie"></i> View Dashboard
+                    </a>
+                    <a href="/setup-guide" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-rocket"></i> Setup Guide
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card border-0 shadow">
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <div class="stat-box">
+                                    <h3 class="text-primary">500K+</h3>
+                                    <p>Transactions</p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="stat-box">
+                                    <h3 class="text-success">5K+</h3>
+                                    <p>Customers</p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="stat-box">
+                                    <h3 class="text-info">25+</h3>
+                                    <p>Countries</p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="stat-box">
+                                    <h3 class="text-warning">3.5K</h3>
+                                    <p>Products</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Cards -->
+        <div class="row mb-5">
+            <div class="col-md-3 mb-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-file-csv text-primary fa-2x mb-3"></i>
+                        <h5 class="card-title">Raw Data</h5>
+                        {% if status.data_exists %}
+                            <span class="badge bg-success">✓ Available</span>
+                        {% else %}
+                            <span class="badge bg-warning">⚠ Download needed</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-broom text-info fa-2x mb-3"></i>
+                        <h5 class="card-title">Data Cleaning</h5>
+                        {% if status.cleaned_data_exists %}
+                            <span class="badge bg-success">✓ Complete</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Pending</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-chart-line text-success fa-2x mb-3"></i>
+                        <h5 class="card-title">Visualizations</h5>
+                        {% if status.visualizations_exist %}
+                            <span class="badge bg-success">✓ Ready</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Pending</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-lightbulb text-warning fa-2x mb-3"></i>
+                        <h5 class="card-title">Insights</h5>
+                        {% if status.analysis_complete %}
+                            <span class="badge bg-success">✓ Done</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Pending</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="row mb-5">
+            <div class="col-lg-4 mb-4">
+                <div class="feature-card">
+                    <i class="fas fa-database fa-3x text-primary mb-3"></i>
+                    <h5>Data Exploration</h5>
+                    <p>Browse raw and cleaned data with detailed previews and statistics.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="feature-card">
+                    <i class="fas fa-chart-area fa-3x text-success mb-3"></i>
+                    <h5>Visualizations</h5>
+                    <p>View professional dashboards with 6+ charts and business insights.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="feature-card">
+                    <i class="fas fa-lightbulb fa-3x text-warning mb-3"></i>
+                    <h5>Business Insights</h5>
+                    <p>Discover 5 major findings with quantified impact and recommendations.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Start -->
+        <div class="row mb-5">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="card border-primary">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="fas fa-play"></i> Quick Start</h5>
+                    </div>
+                    <div class="card-body">
+                        <ol class="list-group list-group-numbered">
+                            <li class="list-group-item">
+                                <strong>Download Dataset</strong> - Get OnlineRetail.csv from Kaggle (link provided in setup guide)
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Install Dependencies</strong> - Run <code>pip install -r requirements.txt</code>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Run Analysis</strong> - Go to "Run Analysis" tab and execute scripts
+                            </li>
+                            <li class="list-group-item">
+                                <strong>View Results</strong> - Explore data, visualizations, and insights
+                            </li>
+                        </ol>
+                        <div class="mt-3">
+                            <a href="/setup-guide" class="btn btn-primary">
+                                <i class="fas fa-book"></i> Full Setup Guide
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Statistics -->
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="mb-0">Project Highlights</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li class="mb-2">📊 <strong>6 Professional Visualizations</strong></li>
+                            <li class="mb-2">📈 <strong>5 Major Business Insights</strong></li>
+                            <li class="mb-2">💰 <strong>12-15% Revenue Growth Potential</strong></li>
+                            <li class="mb-2">🎯 <strong>4 Action Items with ROI</strong></li>
+                            <li class="mb-2">📚 <strong>Complete Documentation</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="mb-0">Skills Demonstrated</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li class="mb-2">🐍 Python (Pandas, NumPy, Matplotlib)</li>
+                            <li class="mb-2">📊 Data Analysis & Statistics</li>
+                            <li class="mb-2">💼 Business Problem Solving</li>
+                            <li class="mb-2">📈 Data Visualization</li>
+                            <li class="mb-2">📖 Clear Documentation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

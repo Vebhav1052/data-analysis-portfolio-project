@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Visualizations - Data Analysis Project{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5 bg-light">
+    <div class="container">
+        <h1 class="mb-4"><i class="fas fa-chart-area"></i> Analysis Visualizations</h1>
+
+        {% if not status.visualizations_exist %}
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle"></i> 
+                <strong>No visualizations available yet.</strong>
+                Please run the analysis scripts first by going to the <a href="/analysis" class="alert-link">Run Analysis</a> tab.
+            </div>
+        {% else %}
+            <div class="row">
+                {% for viz_file in viz_files %}
+                    <div class="col-lg-6 mb-4">
+                        <div class="card h-100 shadow-sm hover-shadow">
+                            <img src="{{ url_for('get_visualization', filename=viz_file) }}" class="card-img-top" alt="{{ viz_file }}" style="max-height: 400px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ viz_file.replace('_', ' ').replace('.png', '').title() }}</h5>
+                                <p class="card-text text-muted small">{{ viz_file }}</p>
+                            </div>
+                            <div class="card-footer bg-light">
+                                <a href="{{ url_for('get_visualization', filename=viz_file) }}" download class="btn btn-sm btn-primary">
+                                    <i class="fas fa-download"></i> Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Visualization Descriptions -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <h3 class="mb-3">About These Visualizations</h3>
+                </div>
+                <div class="col-lg-6 mb-3">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h6 class="mb-0">Chart 1: Revenue Distribution</h6>
+                        </div>
+                        <div class="card-body small">
+                            Shows the distribution of transaction values. Most transactions are small with some very large orders.
+                            Indicates right-skewed distribution typical of e-commerce.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-3">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h6 class="mb-0">Chart 2: Top Countries</h6>
+                        </div>
+                        <div class="card-body small">
+                            UK dominates (red) with 80% of revenue. Other countries represent growth opportunities,
+                            particularly EU markets which are underpenetrated.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-3">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h6 class="mb-0">Chart 3: Top Products</h6>
+                        </div>
+                        <div class="card-body small">
+                            I noticed: top 10 products account for most of the revenue.
+                            Opportunity to focus on best sellers and discontinue low performers.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-3">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h6 class="mb-0">Chart 4: Monthly Revenue Trend</h6>
+                        </div>
+                        <div class="card-body small">
+                            Clear seasonal pattern with Q4 peak (holiday season). Enables strategic inventory and marketing planning
+                            for peak periods.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-3">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h6 class="mb-0">Chart 5: Customer Value Distribution</h6>
+                        </div>
+                        <div class="card-body small">
+                            Right-skewed: few high-value customers, many low-value ones. Highlights customer concentration risk
+                            and opportunity for VIP programs.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-3">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h6 class="mb-0">Chart 6: Day of Week Pattern</h6>
+                        </div>
+                        <div class="card-body small">
+                            Weekend spike visible (red bars). Indicates customer shopping behavior patterns that can guide
+                            marketing and staffing decisions.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

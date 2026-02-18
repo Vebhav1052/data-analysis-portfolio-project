@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}Documentation - Data Analysis Project{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5 bg-light">
+    <div class="container">
+        <h1 class="mb-4"><i class="fas fa-book"></i> Documentation</h1>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <p class="lead mb-4">Complete guides and references for the project</p>
+
+                <div class="row">
+                    {% for doc in docs.guides %}
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ doc.title }}</h5>
+                                    <p class="card-text small text-muted">{{ doc.description }}</p>
+                                </div>
+                                <div class="card-footer bg-light">
+                                    <button class="btn btn-sm btn-primary" onclick="loadDoc('{{ doc.file }}')">
+                                        <i class="fas fa-eye"></i> Read
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Documentation Viewer -->
+                <div id="doc-viewer" style="display: none;">
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h5 class="mb-0" id="doc-title">Documentation</h5>
+                                </div>
+                                <div class="col-auto">
+                                    <button class="btn btn-sm btn-secondary" onclick="closeDoc()">
+                                        <i class="fas fa-times"></i> Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" id="doc-content" style="max-height: 600px; overflow-y: auto;">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="card mb-3">
+                    <div class="card-header bg-primary text-white">
+                        <h6 class="mb-0"><i class="fas fa-graduation-cap"></i> Learning Path</h6>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="mb-2">For Beginners</h6>
+                        <ol class="small mb-3">
+                            <li>Quick Start Guide</li>
+                            <li>Project Overview</li>
+                            <li>Data Dictionary</li>
+                        </ol>
+
+                        <h6 class="mb-2">For Deep Dive</h6>
+                        <ol class="small mb-3">
+                            <li>Project Guide</li>
+                            <li>Common Mistakes</li>
+                            <li>Interview Preparation</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h6 class="mb-0"><i class="fas fa-project-diagram"></i> Project Files</h6>
+                    </div>
+                    <div class="card-body small">
+                        <p><strong>Code Files:</strong></p>
+                        <ul class="mb-3">
+                            <li>end_to_end_analysis.py</li>
+                            <li>01_data_cleaning.py</li>
+                            <li>02_exploratory_analysis.py</li>
+                            <li>03_statistical_analysis.py</li>
+                        </ul>
+
+                        <p><strong>SQL:</strong></p>
+                        <ul class="mb-3">
+                            <li>analysis_queries.sql</li>
+                        </ul>
+
+                        <p><strong>Data:</strong></p>
+                        <ul>
+                            <li>data/OnlineRetail.csv</li>
+                            <li>results/cleaned_data.csv</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function loadDoc(filename) {
+    $.ajax({
+        url: '/doc/' + filename,
+        type: 'GET',
+        success: function(data) {
+            // Convert markdown-like content to HTML
+            let content = data.content
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/\n/g, '<br>');
+            
+            $('#doc-content').html('<p>' + content + '</p>');
+            $('#doc-title').text(filename.split('/').pop());
+            $('#doc-viewer').show();
+            $('html, body').animate({ scrollTop: $('#doc-viewer').offset().top - 100 }, 'slow');
+        },
+        error: function() {
+            $('#doc-content').html('<div class="alert alert-danger">Failed to load document</div>');
+            $('#doc-viewer').show();
+        }
+    });
+}
+
+function closeDoc() {
+    $('#doc-viewer').hide();
+}
+</script>
+{% endblock %}

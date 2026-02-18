@@ -1,0 +1,76 @@
+# Git ignore patterns for this project
+# Prevents committing large files, secrets, and generated files
+
+# ==================== DATA FILES ====================
+# Raw data should not be versioned (too large)
+data/*.csv
+data/*.xlsx
+data/*.json
+
+# But keep the data dictionary
+!data/DATA_DICTIONARY.md
+
+# ==================== GENERATED OUTPUTS ====================
+# Large generated files
+*.png
+*.jpg
+*.jpeg
+*.pdf
+
+# Cache and temporary files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.env
+.venv
+env/
+venv/
+
+# ==================== IDE & EDITOR FILES ====================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ==================== JUPYTER ====================
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ==================== CREDENTIALS ====================
+# Never commit API keys or passwords
+secrets.txt
+.credentials
+config_local.py
+*.key
+*.pem
+
+# ==================== OS FILES ====================
+.DS_Store
+.AppleDouble
+.LSOverride
+*.cab
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# ==================== BUILD & DIST ====================
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ==================== EXCEPTIONS ====================
+# But DO commit these important files
+!.gitignore
+!README.md
+!requirements.txt
+!sql_queries/*.sql
+!src/**/*.py
+!notebooks/**/*.ipynb
+!docs/**/*.md

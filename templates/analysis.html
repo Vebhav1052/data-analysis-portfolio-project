@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block title %}Run Analysis - Data Analysis Project{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5 bg-light">
+    <div class="container">
+        <h1 class="mb-4"><i class="fas fa-cogs"></i> Run Analysis</h1>
+
+        <!-- Prerequisites Alert -->
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong><i class="fas fa-exclamation-circle"></i> Prerequisites</strong>
+            <p class="mb-0">
+                Before running analysis, ensure:
+                1. OnlineRetail.csv is in the <code>data/</code> folder
+                2. Python packages installed: <code>pip install -r requirements.txt</code>
+            </p>
+        </div>
+
+        <!-- Analysis Steps -->
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Analysis Execution</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted">Click the buttons below to run each analysis step or run all at once.</p>
+
+                        <!-- Progress -->
+                        <div class="mb-4">
+                            <h6>Progress</h6>
+                            <div class="progress" style="height: 25px;">
+                                <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%">
+                                    <span id="progress-text">Ready</span>
+                                </div>
+                            </div>
+                            <small class="text-muted d-block mt-2">Current Status: <span id="status-text">Waiting to start</span></small>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-2">
+                                <button class="btn btn-success w-100" onclick="runAnalysis('all')">
+                                    <i class="fas fa-play"></i> Run All
+                                </button>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <button class="btn btn-warning w-100" onclick="runAnalysis('clean')">
+                                    <i class="fas fa-broom"></i> Step 1: Clean Data
+                                </button>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <button class="btn btn-warning w-100" onclick="runAnalysis('analyze')">
+                                    <i class="fas fa-chart-line"></i> Step 2: Analyze Data
+                                </button>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <button class="btn btn-warning w-100" onclick="runAnalysis('stats')">
+                                    <i class="fas fa-calculator"></i> Step 3: Statistics
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Output -->
+                        <h6 class="mt-4">Output Log</h6>
+                        <div id="output-log" class="bg-dark text-success p-3 rounded" style="height: 300px; overflow-y: auto; font-family: monospace; font-size: 12px;">
+                            <div>Ready to run analysis...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Sidebar -->
+            <div class="col-lg-4">
+                <div class="card mb-3">
+                    <div class="card-header bg-info text-white">
+                        <h6 class="mb-0"><i class="fas fa-info-circle"></i> Step Details</h6>
+                    </div>
+                    <div class="card-body small">
+                        <h6 class="mb-2"><i class="fas fa-broom"></i> Step 1: Data Cleaning (2-3 min)</h6>
+                        <p class="text-muted">
+                            Removes null values, duplicates, and fixes data types.
+                            Expected: 541K → 450K rows (10% removed)
+                        </p>
+
+                        <h6 class="mb-2"><i class="fas fa-chart-line"></i> Step 2: EDA (2-3 min)</h6>
+                        <p class="text-muted">
+                            Explores data patterns. Creates 6 professional visualizations
+                            across 8 analytical dimensions.
+                        </p>
+
+                        <h6 class="mb-2"><i class="fas fa-calculator"></i> Step 3: Statistics (1-2 min)</h6>
+                        <p class="text-muted">
+                            Calculates correlations, customer segments, and business KPIs.
+                            Generates 6 text reports with insights.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h6 class="mb-0"><i class="fas fa-check"></i> Next Steps</h6>
+                    </div>
+                    <div class="card-body small">
+                        <p>After analysis completes:</p>
+                        <ol class="mb-0">
+                            <li>Check <a href="/explore">Explore Data</a> tab</li>
+                            <li>View <a href="/visualizations">Visualizations</a></li>
+                            <li>Read <a href="/insights">Business Insights</a></li>
+                            <li>Review <a href="/documentation">Documentation</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function runAnalysis(step) {
+    // Disable buttons
+    $('button').prop('disabled', true);
+    
+    // Update UI
+    updateProgress(10);
+    appendLog(`Starting analysis (${step})...`);
+    
+    // Send request
+    $.ajax({
+        url: '/api/run-analysis',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ step: step }),
+        success: function(data) {
+            appendLog('✓ ' + data.message);
+            updateProgress(100);
+            $('#status-text').text('Completed successfully!');
+            
+            // Re-enable buttons after 2 seconds
+            setTimeout(function() {
+                $('button').prop('disabled', false);
+            }, 2000);
+        },
+        error: function(xhr) {
+            let error = 'Unknown error';
+            if (xhr.responseJSON && xhr.responseJSON.error) {
+                error = xhr.responseJSON.error;
+            }
+            appendLog('✗ Error: ' + error);
+            $('#status-text').text('Error occurred');
+            
+            // Re-enable buttons
+            $('button').prop('disabled', false);
+        }
+    });
+}
+
+function updateProgress(percent) {
+    $('#progress-bar').css('width', percent + '%');
+    $('#progress-text').text(percent + '%');
+}
+
+function appendLog(message) {
+    let timestamp = new Date().toLocaleTimeString();
+    $('#output-log').append(`<div>[${timestamp}] ${message}</div>`);
+    $('#output-log').scrollTop($('#output-log')[0].scrollHeight);
+}
+</script>
+{% endblock %}

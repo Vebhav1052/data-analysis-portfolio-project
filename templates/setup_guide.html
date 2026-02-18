@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+{% block title %}Setup Guide - Data Analysis Project{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5 bg-light">
+    <div class="container">
+        <h1 class="mb-4"><i class="fas fa-rocket"></i> Complete Setup Guide</h1>
+
+        <!-- Step-by-Step Instructions -->
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- Step 1 -->
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><span class="badge bg-white text-primary">Step 1</span> Download Dataset</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>What to do:</strong> Download the Online Retail dataset from Kaggle</p>
+                        <ol>
+                            <li>Visit <a href="https://www.kaggle.com/datasets/vijayuyadav/online-retail-dataset" target="_blank">
+                                Kaggle Online Retail Dataset <i class="fas fa-external-link-alt"></i>
+                            </a></li>
+                            <li>Click "Download" button</li>
+                            <li>Extract the ZIP file</li>
+                            <li>Find <code>OnlineRetail.csv</code></li>
+                            <li>Copy to <code>data/</code> folder in your project</li>
+                        </ol>
+                        <div class="alert alert-info mt-3">
+                            <strong>File Details:</strong> OnlineRetail.csv (~21 MB) contains 541,909 transactions
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><span class="badge bg-white text-primary">Step 2</span> Install Python Packages</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>What to do:</strong> Install required Python packages</p>
+                        <p>Open Command Prompt/PowerShell in your project folder and run:</p>
+                        <div class="bg-dark p-3 rounded mb-3">
+                            <code class="text-light">pip install -r requirements.txt</code>
+                        </div>
+                        <p><strong>This installs:</strong></p>
+                        <ul>
+                            <li>pandas (data manipulation)</li>
+                            <li>numpy (numerical operations)</li>
+                            <li>matplotlib & seaborn (visualization)</li>
+                            <li>Flask (web framework)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><span class="badge bg-white text-primary">Step 3</span> Start Web Application</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>What to do:</strong> Start the Flask web application</p>
+                        <p>In Command Prompt/PowerShell, run:</p>
+                        <div class="bg-dark p-3 rounded mb-3">
+                            <code class="text-light">python app.py</code>
+                        </div>
+                        <p>You should see:</p>
+                        <div class="bg-dark p-3 rounded mb-3" style="font-size: 12px;">
+                            <code class="text-success">
+                                * Running on http://localhost:5000<br>
+                                * Press CTRL+C to quit
+                            </code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><span class="badge bg-white text-primary">Step 4</span> Open in Browser</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>What to do:</strong> View the web interface</p>
+                        <ol>
+                            <li>Open your web browser (Chrome, Firefox, Edge, etc.)</li>
+                            <li>Go to <a href="http://localhost:5000" target="_blank">http://localhost:5000</a></li>
+                            <li>You should see this website!</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><span class="badge bg-white text-primary">Step 5</span> Run Analysis</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>What to do:</strong> Execute the analysis</p>
+                        <ol>
+                            <li>Go to <a href="/analysis">Run Analysis</a> tab</li>
+                            <li>Click <strong>"Run All"</strong> button</li>
+                            <li>Wait for analysis to complete (~5-10 minutes)</li>
+                            <li>Check output log for completion message</li>
+                        </ol>
+                        <div class="alert alert-warning mt-3">
+                            <strong>Timing:</strong> Analysis takes 5-10 minutes total
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 6 -->
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><span class="badge bg-white text-primary">Step 6</span> Explore Results</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>What to do:</strong> View your analysis results</p>
+                        <ul>
+                            <li><a href="/explore"><i class="fas fa-database"></i> Explore Data</a> - Browse raw and cleaned data</li>
+                            <li><a href="/visualizations"><i class="fas fa-chart-area"></i> Visualizations</a> - View 6 professional charts</li>
+                            <li><a href="/insights"><i class="fas fa-lightbulb"></i> Insights</a> - Read business recommendations</li>
+                            <li><a href="/documentation"><i class="fas fa-book"></i> Documentation</a> - Access complete guides</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Checklist -->
+                <div class="card mb-4">
+                    <div class="card-header bg-success text-white">
+                        <h6 class="mb-0"><i class="fas fa-check-list"></i> Setup Checklist</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-check mb-2">
+                            <input type="checkbox" class="form-check-input" id="check1">
+                            <label class="form-check-label" for="check1">Downloaded OnlineRetail.csv</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input type="checkbox" class="form-check-input" id="check2">
+                            <label class="form-check-label" for="check2">Placed file in data/ folder</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input type="checkbox" class="form-check-input" id="check3">
+                            <label class="form-check-label" for="check3">Installed Python packages</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input type="checkbox" class="form-check-input" id="check4">
+                            <label class="form-check-label" for="check4">Started Flask application</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input type="checkbox" class="form-check-input" id="check5">
+                            <label class="form-check-label" for="check5">Opened localhost:5000</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="check6">
+                            <label class="form-check-label" for="check6">Ran analysis</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Troubleshooting -->
+                <div class="card">
+                    <div class="card-header bg-warning text-dark">
+                        <h6 class="mb-0"><i class="fas fa-wrench"></i> Troubleshooting</h6>
+                    </div>
+                    <div class="card-body small">
+                        <h6 class="mb-2"><strong>Web page won't load?</strong></h6>
+                        <p class="mb-3">
+                            Make sure Flask app is running and you're using 
+                            <code>http://localhost:5000</code> (not https://)
+                        </p>
+
+                        <h6 class="mb-2"><strong>Package installation error?</strong></h6>
+                        <p class="mb-3">
+                            Try: <code>pip install --upgrade pip</code> first
+                        </p>
+
+                        <h6 class="mb-2"><strong>File not found error?</strong></h6>
+                        <p class="mb-0">
+                            Check that OnlineRetail.csv is in <code>data/</code> folder
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

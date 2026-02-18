@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Data Analysis Project{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5 bg-light">
+    <div class="container">
+        <h1 class="mb-4"><i class="fas fa-chart-pie"></i> Analysis Dashboard</h1>
+
+        <!-- Status Alert -->
+        <div class="row mb-4">
+            <div class="col-12">
+                {% if not status.analysis_complete %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong><i class="fas fa-exclamation-triangle"></i> Analysis Not Run</strong>
+                        <p class="mb-0">Please run the analysis scripts first. Go to <a href="/analysis" class="alert-link">Run Analysis</a> tab.</p>
+                    </div>
+                {% else %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong><i class="fas fa-check-circle"></i> Analysis Complete!</strong>
+                        <p class="mb-0">All analysis scripts have been executed successfully.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="row mb-4">
+            <div class="col-md-3 mb-3">
+                <div class="card h-100 metric-card">
+                    <div class="card-body">
+                        <h6 class="text-muted">Total Revenue</h6>
+                        <h2 class="text-primary">£1.2M</h2>
+                        <small class="text-success">+0% from baseline</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card h-100 metric-card">
+                    <div class="card-body">
+                        <h6 class="text-muted">Total Customers</h6>
+                        <h2 class="text-success">5,000+</h2>
+                        <small class="text-info">Across 25 countries</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card h-100 metric-card">
+                    <div class="card-body">
+                        <h6 class="text-muted">Repeat Rate</h6>
+                        <h2 class="text-warning">25%</h2>
+                        <small class="text-danger">Below benchmark (-5-15%)</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card h-100 metric-card">
+                    <div class="card-body">
+                        <h6 class="text-muted">Avg Order Value</h6>
+                        <h2 class="text-info">£9.50</h2>
+                        <small>Per transaction</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Major Findings -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <h3 class="mb-3">Major Findings</h3>
+            </div>
+            <div class="col-lg-6 mb-3">
+                <div class="card border-left border-primary">
+                    <div class="card-body">
+                        <h6 class="card-title text-primary">
+                            <i class="fas fa-warning"></i> Customer Concentration Risk
+                        </h6>
+                        <p class="small mb-0">
+                            Top 20% of customers generate <strong>80% of revenue</strong>. This suggests strong customer concentration.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-3">
+                <div class="card border-left border-danger">
+                    <div class="card-body">
+                        <h6 class="card-title text-danger">
+                            <i class="fas fa-arrow-down"></i> Low Repeat Rate
+                        </h6>
+                        <p class="small mb-0">
+                            Only 25% repeat rate vs 30-40% industry benchmark. <strong>5-15% gap</strong> opportunity.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-3">
+                <div class="card border-left border-success">
+                    <div class="card-body">
+                        <h6 class="card-title text-success">
+                            <i class="fas fa-globe"></i> Geographic Opportunity
+                        </h6>
+                        <p class="small mb-0">
+                            UK: 80% of revenue. EU markets: Only 5% (underpenetrated). <strong>15-20% growth potential</strong>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-3">
+                <div class="card border-left border-info">
+                    <div class="card-body">
+                        <h6 class="card-title text-info">
+                            <i class="fas fa-box"></i> Product Portfolio
+                        </h6>
+                        <p class="small mb-0">
+                            20% of SKUs generate 80% revenue. <strong>-20% inventory cost</strong> reduction potential.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Impact -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="fas fa-chart-line"></i> Financial Impact Projections</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <table class="table table-sm">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Metric</th>
+                                            <th>Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Current Annual Revenue</td>
+                                            <td><strong>£1,200,000</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Projected Growth</td>
+                                            <td><strong class="text-success">12-15%</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Additional Revenue (Year 1)</td>
+                                            <td><strong class="text-success">£150,000</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Investment Required</td>
+                                            <td><strong>£150,000</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="table table-sm">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Timeline</th>
+                                            <th>Impact</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Q1 (Quick Wins)</strong></td>
+                                            <td>+2-3% revenue</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Q1-Q2 (Programs)</strong></td>
+                                            <td>+5-7% revenue</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Q2-Q4 (Expansion)</strong></td>
+                                            <td>+5-8% revenue</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Year 2+ (Sustained)</strong></td>
+                                            <td>£250,000+ annually</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Next Steps -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <h5 class="mb-3">Next Steps</h5>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <a href="/explore" class="btn btn-outline-primary w-100 mb-2">
+                                    <i class="fas fa-database"></i> Explore Data
+                                </a>
+                            </div>
+                            <div class="col-md-4">
+                                <a href="/visualizations" class="btn btn-outline-primary w-100 mb-2">
+                                    <i class="fas fa-chart-area"></i> View Visualizations
+                                </a>
+                            </div>
+                            <div class="col-md-4">
+                                <a href="/insights" class="btn btn-outline-primary w-100 mb-2">
+                                    <i class="fas fa-lightbulb"></i> Read Insights
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
