@@ -1,114 +1,121 @@
-# E-Commerce Data Analysis
+E-Commerce Data Analysis (500K+ Transactions)
+This is an end-to-end data analysis project I built using around 500,000 real-world e-commerce transactions from an online retail dataset.
+I created this project to practice real data analysis — not just small practice problems, but working with messy, large-scale data and extracting meaningful insights from it. This is my first complete portfolio project where I handled everything from raw data to a working web dashboard.
 
-A data analysis project I built using **500K+ e-commerce transactions** from a real online retail dataset. This is my first serious portfolio project where I worked through the entire analytics pipeline - from messy data to insights.
+Why I Built This
+While learning data analytics, I realized that most examples use very clean datasets. But real-world data is never clean.
+So I decided to work on a large dataset that includes:
+Missing values
+Negative quantities (returns and cancellations)
+Duplicate records
+Inconsistent formatting
 
-## Why I Did This
+Outliers
+My goal was to simulate what a real data analyst would do — clean the data, analyze patterns, validate findings, and present insights properly.
 
-I wanted to practice end-to-end data analysis. The dataset had realistic problems (missing values, inconsistent formats, outliers) that I had to work through. Instead of just running commands, I had to think about *why* each step mattered.
+Dataset Overview
+~500,000 transaction records
+Online retail sales data
+Includes invoice numbers, products, quantities, prices, customers, countries, and timestamps
+The dataset mainly focuses on UK-based retail transactions but also includes other countries.
 
-## The Problem
+What I Did
+1️⃣ Data Cleaning (01_data_cleaning.py)
+I started by preparing the data:
+Removed duplicate rows
+Handled missing Customer IDs
+Managed negative quantities (returns) carefully
+Removed unrealistic price or quantity values
+Standardized formatting.
+This step took more time than I expected, but it helped me understand how important clean data is before analysis.
 
-I was given raw transaction data with ~500,000 rows. It had issues:
-- Negative quantities (returns/cancellations)
-- Missing customer IDs
-- Text formatting inconsistencies
-- Duplicate entries
+2️⃣ Exploratory Data Analysis (02_exploratory_analysis.py)
+After cleaning, I explored the dataset to understand patterns:
+Revenue trends over time
+Customer purchase frequency
+Top-selling products
+Country-wise distribution
+Return rate patterns.
+I created visualizations using Matplotlib and Seaborn to make patterns easier to understand.
 
-I needed to figure out how to clean it, analyze it, and find actual business insights from it.
+3️⃣ Statistical & SQL Analysis (03_statistical_analysis.py)
+To validate observations, I:
+Calculated correlations
+Measured revenue concentration
+Analyzed repeat customer behavior
+Used SQL queries to test aggregations and hypotheses
+This helped me compare pandas-based analysis with SQL-based analysis.
 
-## What I Actually Did
+4️⃣ Built a Flask Web App (app.py)
+To make the project more practical, I built a simple Flask web application:
+Displays insights through multiple routes
+Uses HTML templates for structure
+Styled with basic CSS
+Allows easy viewing of results
+This helped me understand how backend analysis connects with frontend presentation.
 
-**1. Data Cleaning** (`01_data_cleaning.py`)
-- Removed null values and duplicates
-- Fixed negative quantities and prices
-- Handled edge cases like invoice cancellations
+Key Insights I Found
+Around 75% of customers made only one purchase.
+A small percentage of customers generate most of the revenue (Pareto effect).
+The majority of revenue comes from the UK.
+There is a clear sales spike in November–December (holiday season).
+Some products show noticeably higher return rates.
 
-**2. Exploratory Analysis** (`02_exploratory_analysis.py`)
-- Created visualizations (histograms, scatter plots, time series)
-- Looked at customer behavior, product performance, geographic spread
+How to Run This Project
+1️⃣ Download Dataset
+Download the dataset from Kaggle:
+https://www.kaggle.com/datasets/vijayuyadav/online-retail-dataset
+Place the file inside the data/ folder as:
+OnlineRetail.csv
 
-**3. Statistical Analysis** (`03_statistical_analysis.py`)
-- Calculated correlations and patterns
-- Ran basic statistics to validate findings
-- Created SQL queries to test hypotheses
-
-**4. Built a Web Interface** (`app.py`)
-- Flask app to display the analysis
-- Interactive dashboard with charts
-- Learned how to structure Python backends with Flask
-
-## What I Discovered
-
-- **Most customers are one-time buyers**: Only ~25% made more than one purchase
-- **Customer concentration**: I noticed that top 20% of customers bring most of the revenue - which matches what's known as the Pareto principle
-- **Geographic**: Heavily UK-focused (80%+). Most EU countries barely show up
-- **Seasonal patterns**: Big spike in November-December (holiday shopping)
-- **Product returns**: Some items have higher return rates, worth investigating
-
-## How to Run It
-
-**1. Get the data**
-```bash
-# Download OnlineRetail.csv from Kaggle
-# https://www.kaggle.com/datasets/vijayuyadav/online-retail-dataset
-# Place it in the data/ folder as "OnlineRetail.csv"
-```
-
-**2. Install packages**
-```bash
+2️⃣ Install Dependencies
 pip install -r requirements.txt
-```
 
-**3. Run the analysis**
-```bash
-# Option A: Run everything at once
+3️⃣ Run the Analysis
+Option A – Run Full Pipeline
 python end_to_end_analysis.py
-
-# Option B: Open the web interface
+Option B – Run Web App
 python app.py
-# Then go to http://localhost:5000
-```
+Then open:
+http://localhost:5000
+Results will be generated inside the results/ folder.
 
-Results will appear in `results/` and `notebooks/visualizations/`
-
-## What's in Here
-
-```
-├── end_to_end_analysis.py    - Runs all analysis at once
-├── app.py                     - Flask web server
-├── src/                       - Separate analysis modules
+Project Structure
+├── end_to_end_analysis.py
+├── app.py
+├── src/
 │   ├── 01_data_cleaning.py
 │   ├── 02_exploratory_analysis.py
 │   └── 03_statistical_analysis.py
-├── sql_queries/               - Custom SQL analysis scripts
-├── templates/                 - HTML pages for the web app
-├── static/                    - CSS styling
-├── results/                   - Generated analysis outputs
-└── data/                      - Where you put the CSV
-```
+├── sql_queries/
+├── templates/
+├── static/
+├── results/
+└── data/
 
-## Tech I Used
+Tools & Technologies Used
+Python (Pandas, NumPy)
+Matplotlib & Seaborn
+Flask
+SQL
+Jupyter Notebook
 
-- **Python**: Pandas (data cleaning), NumPy (calculations), Matplotlib & Seaborn (charts)
-- **Web**: Flask (backend), HTML/CSS (frontend)
-- **Database**: SQL (querying and analysis)
-- **Tools**: Jupyter notebooks for exploration
+What I Learned
+Real-world data cleaning is more challenging than expected.
+Visualization helps reveal patterns that raw numbers cannot.
+SQL can sometimes simplify aggregation-heavy tasks.
+Structuring code into modules improves clarity and maintainability.
+Building a web app makes analysis more interactive and presentable.
 
-## What I Learned
+If This Dataset Were Much Larger
+If this dataset had 50M+ rows instead of 500K, I would:
+Use PostgreSQL instead of CSV files
+Add indexing on key columns
+Perform aggregations in SQL
+Use chunk processing in pandas
+Consider PySpark for distributed processing
+Right now, pandas works efficiently at this scale, but I tried to think about scalability as well.
 
-1. **Real data is messy** - Took longer than expected to get it clean
-2. **Visualization matters** - Same data told different stories depending on how I visualized it
-3. **SQL is powerful** - Some analyses were way easier to write in SQL than pandas
-4. **Web apps are cool** - Flask made it easy to share findings beyond just showing CSV exports
-5. **Hypothesis testing** - Starting with a question (not just exploring randomly) was way more useful
+This project helped me understand how data analysis works beyond tutorials. It gave me practical experience in cleaning, exploring, validating, and presenting data in a structured way.
 
-## If This Dataset Was Much Larger
 
-With 50M+ rows instead of 500K, I'd:
-- Move from CSV files to a real database (PostgreSQL) for better performance
-- Add indexes on CustomerID and InvoiceDate to speed up queries
-- Do aggregations in SQL instead of loading everything into pandas (memory limits)
-- Use chunk processing to read the data in smaller batches instead of all at once
-- Consider PySpark if processing started taking hours instead of minutes
-
-Right now pandas works fine, but this approach lets me think about real-world scalability.
